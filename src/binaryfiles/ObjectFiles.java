@@ -5,7 +5,7 @@ public class ObjectFiles {
 
     public static void main(String[] args) {
 
-        int chooser = 0, i;
+        int chooser = 0;
         boolean exit = false, repeat; //Those are for repeating parts of the program
         System.out.println("Hello " + System.getProperty("user.name") + "!");
 

@@ -118,7 +118,7 @@ public class OFworks {
     public static void searchUser() {
         String s;
         int ask = -1;
-        boolean aurkitua = false;
+        boolean found = false;
         while (ask == -1) { //It asks for the DNI to delete
             System.out.println("Enter the DNI you want to search for: ");
             s = Read.String();
@@ -136,7 +136,7 @@ public class OFworks {
 
         try (MiObjectInputStream ois = new MiObjectInputStream(new FileInputStream("C:\\program\\Users.ser"))) {
 
-            while (!aurkitua) {//Reads users until finds the one we want to show
+            while (!found) {//Reads users until finds the one we want to show
 
                 User user = (User) ois.readObject();
                 if (user.getDni() == ask) {//If it is the user to be shown enters here
@@ -146,14 +146,12 @@ public class OFworks {
                     System.out.println("Address: " + user.getAddress() + " | Phone number: " + user.getPhone());
                     System.out.println("Username: " + user.getUsername() + " | Password: " + user.getPassword());
                     System.out.println("--------");
-                    aurkitua = true;
+                    found = true;
                 }
             }
 
         } catch (EOFException end) {
-            if (!aurkitua) {
-                System.out.println("Can't find user with that DNI");
-            }
+            System.out.println("Can't find user with that DNI");
         } catch (FileNotFoundException gaizki) {
             System.out.println("File not Found.");
         } catch (IOException gaizki) {
@@ -168,7 +166,6 @@ public class OFworks {
         String s;
         boolean aurkitua = false;
         int ask = -1;
-        boolean eof;
         while (ask == -1) {
             System.out.println("Enter the ID you want to search for: ");
             s = Read.String();
@@ -201,9 +198,7 @@ public class OFworks {
             }
 
         } catch (EOFException end) {
-            if (!aurkitua) {
-                System.out.println("There is no flight with that id");
-            }
+            System.out.println("There is no flight with that id");
         } catch (FileNotFoundException gaizki) {
             System.out.println("File not Found.");
         } catch (IOException gaizki) {
@@ -257,19 +252,16 @@ public class OFworks {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(OFworks.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
+        
+        
         if (exist) {//If the file exist
-
             try (MiObjectOutputStream oos = new MiObjectOutputStream(new FileOutputStream("C:\\program\\Users.ser"))) {
-
                 for (int i = 0; i < users.size(); i++) {//Writes all the users
-
                     oos.writeObject(users.get(i));
-
                 }
             } catch (FileNotFoundException ex) {
                 System.out.println("Can't find file");
-
             } catch (IOException ex) {
                 System.out.println("You've typed something wrong");
 
@@ -278,7 +270,7 @@ public class OFworks {
     }
 
     public static void deleteFlight() {//sames as deleteUser()
-        boolean aurkitua = false, exist = true;
+        boolean found = false, exist = true;
         ArrayList<Flight> flights = new ArrayList<>();
 
         int ask = -1;
@@ -309,7 +301,7 @@ public class OFworks {
             }
 
         } catch (EOFException ex) {
-            if (!aurkitua) {
+            if (!found) {
                 System.out.println("There is no flight with that id");
             }
         } catch (FileNotFoundException ex) {
@@ -325,18 +317,13 @@ public class OFworks {
             try (MiObjectOutputStream oos = new MiObjectOutputStream(new FileOutputStream("C:\\program\\Flights.ser"))) {
 
                 for (int i = 0; i < flights.size(); i++) {
-
                     oos.writeObject(flights.get(i));
-
                 }
             } catch (FileNotFoundException ex) {
                 System.out.println("Can't find file");
-
             } catch (IOException ex) {
                 System.out.println("You've typed something wrong");
-
             }
-
         }
     }
 
