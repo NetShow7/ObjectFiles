@@ -12,8 +12,8 @@ public class Flight implements Serializable {
     //Members
     private int flightid;
     private int duration;
-    private String from;
-    private String to;
+    private String from;//Hay que cambiarlo por origin
+    private String to;//Hay que cambiarlo por destination
     private String pilot1;
     private String pilot2;
     private int tickets;
