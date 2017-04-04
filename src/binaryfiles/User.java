@@ -18,6 +18,13 @@ public class User extends Person implements Serializable {
 
     }
 
+    public User(int d, String n, String s, String a, int p, String UserName, String Password, String Email) {
+        super(d, n, s, a, p);
+        username = UserName;
+        password = Password;
+        email = Email;
+    }
+
     public User(String s) {
         super(s);
     }

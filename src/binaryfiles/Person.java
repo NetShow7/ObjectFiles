@@ -26,6 +26,15 @@ public class Person implements Serializable {
         setPhone();
     }
 
+    public Person(int d, String n, String s, String a, int p) {
+        dni = d;
+        name = n;
+        surname = s;
+        setBirth();
+        address = a;
+        phone = p;
+    }
+
     public Person(String s) {
 
     }

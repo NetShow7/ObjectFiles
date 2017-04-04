@@ -35,7 +35,20 @@ public class Flight implements Serializable {
         setPrice();
     }
 
-    public Flight(String s) {
+    public Flight(int id, int dur, String from, String to, String p1, String p2, int tick, int t_sold, LocalDate date, float price) {
+        flightid = id;
+        duration = dur;
+        this.from = from;
+        this.to = to;
+        pilot1 = p1;
+        pilot2 = p2;
+        tickets = tick;
+        tickets_sold = t_sold;
+        this.date = date;
+        this.price = price;
+    }
+
+    Flight(String empty) {
         
     }
 
