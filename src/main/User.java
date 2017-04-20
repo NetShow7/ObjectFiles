@@ -1,8 +1,9 @@
-package binaryfiles;
+package main;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import utilities.Read;
 
 public class User extends Person implements Serializable {
 

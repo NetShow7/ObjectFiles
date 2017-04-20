@@ -1,5 +1,8 @@
 
-package binaryfiles;
+package main;
+
+import utilities.OFworks;
+import utilities.Read;
 
 public class ObjectFiles {
 
@@ -41,6 +44,7 @@ public class ObjectFiles {
                         System.out.println("4 - Delete a saved user");
                         System.out.println("5 - Go back");
                         System.out.println("6 - Exit");
+                        System.out.println("***************************************");
                         System.out.println("");
                         chooser = Read.Int();
 
@@ -87,6 +91,7 @@ public class ObjectFiles {
                         System.out.println("4 - Delete a saved flight");
                         System.out.println("5 - Go back");
                         System.out.println("6 - Exit");
+                        System.out.println("***************************************");
                         System.out.println("");
                         chooser = Read.Int();
 

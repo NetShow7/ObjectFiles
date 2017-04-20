@@ -1,4 +1,4 @@
-package binaryfiles;
+package utilities;
 
 import java.io.EOFException;
 import java.io.FileInputStream;
@@ -16,6 +16,9 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import main.Flight;
+import utilities.Read;
+import main.User;
 
 /**
  *
@@ -25,16 +28,39 @@ public class OFworks {
 
     public static void writeUser() {
         int repeat = 0;
-
+        boolean exist;
+        exist = false;
         do {
             User user = new User();//Creates a new user for saving it in a file
+            try (MiObjectInputStream ois = new MiObjectInputStream(new FileInputStream("C:\\program\\Users.ser"))) {
+                while (!exist) {//Reads users from file and checks if exists
+                    User user2 = (User) ois.readObject();
+                    if (user.getDni() == user2.getDni()) {
+                        exist = true;
+                    }
 
-            try (MiObjectOutputStream oos = new MiObjectOutputStream(new FileOutputStream("C:\\program\\Users.ser", true))) {
-                oos.writeObject(user);
+                }
+
             } catch (FileNotFoundException ex) {
-                System.out.println("Can't find file");
+
             } catch (IOException ex) {
+
+            } catch (ClassNotFoundException ex) {
                 Logger.getLogger(OFworks.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (!exist) {
+
+                try (MiObjectOutputStream oos = new MiObjectOutputStream(new FileOutputStream("C:\\program\\Users.ser", true))) {
+                    oos.writeObject(user);
+                } catch (FileNotFoundException ex) {
+                    System.out.println("Can't find file");
+                } catch (IOException ex) {
+                    Logger.getLogger(OFworks.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                System.out.println("");
+                System.out.println("/!\\ User already exists.");
+                System.out.println("");
             }
             do { //A menu to go back or repeat the operation
                 System.out.println("1- Save another user");
@@ -48,16 +74,38 @@ public class OFworks {
 
     public static void writeFlight() {//Same method as writeUser()
         int repeat = 0;
-
+        boolean exist;
+        exist = false;
         do {
             Flight flight = new Flight();
+            try (MiObjectInputStream ois = new MiObjectInputStream(new FileInputStream("C:\\program\\Users.ser"))) {
+                while (!exist) {//Reads flights from file
+                    Flight flight2 = (Flight) ois.readObject();
+                    if (flight.getFlightid() == flight2.getFlightid()) {
+                        exist = true;
+                    }
+                }
 
-            try (MiObjectOutputStream oos = new MiObjectOutputStream(new FileOutputStream("C:\\program\\Flights.ser", true))) {
-                oos.writeObject(flight);
             } catch (FileNotFoundException ex) {
-                System.out.println("Can't find file");
+
             } catch (IOException ex) {
+
+            } catch (ClassNotFoundException ex) {
                 Logger.getLogger(OFworks.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (exist) {
+
+                try (MiObjectOutputStream oos = new MiObjectOutputStream(new FileOutputStream("C:\\program\\Flights.ser", true))) {
+                    oos.writeObject(flight);
+                } catch (FileNotFoundException ex) {
+                    System.out.println("Can't find file");
+                } catch (IOException ex) {
+                    Logger.getLogger(OFworks.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                System.out.println("");
+                System.out.println("/!\\ Flight already exists.");
+                System.out.println("");
             }
             do {
                 System.out.println("1- Save another flight");
@@ -99,7 +147,7 @@ public class OFworks {
                 Flight flight = (Flight) ois.readObject();
 
                 System.out.println("FlightID: " + flight.getFlightid() + " | Duration: " + flight.getDuration() + "min Date: " + flight.getDate());
-                System.out.println("Goes from: " + flight.getFrom() + " To: " + flight.getTo());
+                System.out.println("Origin: " + flight.getOrigin() + " Destination: " + flight.getDestination());
                 System.out.println("The pilots are " + flight.getPilot1() + " and " + flight.getPilot2());
                 System.out.println(flight.getTickets_sold() + " tickets have been sold out of " + flight.getTickets() + " with a price of " + flight.getPrice() + "€");
                 System.out.println("----------");
@@ -188,7 +236,7 @@ public class OFworks {
                 if (ask == flg.getFlightid()) {
 
                     System.out.println("FlightID: " + flg.getFlightid() + " | Duration: " + flg.getDuration() + "min Date: " + flg.getDate());
-                    System.out.println("Goes from: " + flg.getFrom() + " To: " + flg.getTo());
+                    System.out.println("Origin: " + flg.getOrigin() + " Destination: " + flg.getDestination());
                     System.out.println("The pilots are " + flg.getPilot1() + " and " + flg.getPilot2());
                     System.out.println(flg.getTickets_sold() + " tickets have been sold out of " + flg.getTickets() + " with a price of " + flg.getPrice() + "€");
                     System.out.println("----------");
@@ -252,9 +300,7 @@ public class OFworks {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(OFworks.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
+
         if (exist) {//If the file exist
             try (MiObjectOutputStream oos = new MiObjectOutputStream(new FileOutputStream("C:\\program\\Users.ser"))) {
                 for (int i = 0; i < users.size(); i++) {//Writes all the users

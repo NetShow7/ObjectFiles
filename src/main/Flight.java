@@ -1,4 +1,4 @@
-package binaryfiles;
+package main;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -6,14 +6,15 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+import utilities.Read;
 
 public class Flight implements Serializable {
 
     //Members
     private int flightid;
     private int duration;
-    private String from;
-    private String to;
+    private String origin;
+    private String destination;
     private String pilot1;
     private String pilot2;
     private int tickets;
@@ -25,8 +26,8 @@ public class Flight implements Serializable {
     public Flight() {
         setFlightid();
         setDuration();
-        setFrom();
-        setTo();
+        setOrigin();
+        setDestination();
         setPilot1();
         setPilot2();
         setTickets();
@@ -38,8 +39,8 @@ public class Flight implements Serializable {
     public Flight(int id, int dur, String from, String to, String p1, String p2, int tick, int t_sold, LocalDate date, float price) {
         flightid = id;
         duration = dur;
-        this.from = from;
-        this.to = to;
+        this.origin = from;
+        this.destination = to;
         pilot1 = p1;
         pilot2 = p2;
         tickets = tick;
@@ -61,12 +62,12 @@ public class Flight implements Serializable {
         return duration;
     }
 
-    public String getFrom() {
-        return from;
+    public String getOrigin() {
+        return origin;
     }
 
-    public String getTo() {
-        return to;
+    public String getDestination() {
+        return destination;
     }
 
     public String getPilot1() {
@@ -127,14 +128,14 @@ public class Flight implements Serializable {
 
     }
 
-    public void setFrom(String NewFrom) {
-        from = NewFrom;
+    public void setOrigin(String NewOrigin) {
+        origin = NewOrigin;
     }
 
-    public void setFrom() {
+    public void setOrigin() {
         String s = "";
         while (s.isEmpty()) {
-            System.out.println("Enter the place from which the plane takes off: ");
+            System.out.println("Enter the flight origin: ");
             s = Read.String();
             if (s.isEmpty()) {
                 System.out.println("You must type something");
@@ -148,17 +149,17 @@ public class Flight implements Serializable {
             }
         }
 
-        from = s;
+        origin = s;
     }
 
-    public void setTo(String NewTo) {
-        to = NewTo;
+    public void setDestination(String NewDestination) {
+        destination = NewDestination;
     }
 
-    public void setTo() {
+    public void setDestination() {
         String s = "";
         while (s.isEmpty()) {
-            System.out.println("Enter the place of arrival: ");
+            System.out.println("Enter the flight destination: ");
             s = Read.String();
             if (s.isEmpty()) {
                 System.out.println("You must type something");
@@ -172,7 +173,7 @@ public class Flight implements Serializable {
             }
         }
 
-        to = s;
+        destination = s;
     }
 
     public void setPilot1(String NewPilot1) {
